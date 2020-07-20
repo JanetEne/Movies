@@ -1,2 +1,2 @@
-# janetforlife
-This is going to be a fun journey
+Movies
+An API about movies
