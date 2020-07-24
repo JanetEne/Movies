@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Movies', [{
+    queryInterface.bulkInsert('Movies', [{
       title: 'A quiet place',
       genres: 'Horror',
       writers: 'Scott Beck',
@@ -12,6 +12,6 @@ module.exports = {
     }]);
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Users', null, {});
+    queryInterface.bulkDelete('Users', null, {});
   }
 };
