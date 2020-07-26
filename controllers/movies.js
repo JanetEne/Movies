@@ -12,6 +12,22 @@ class Movies {
       res.status(200).send({ message: 'Movies fetched successfully', movies })
     })
   }
+
+  static addMovies(req, res) {
+    moviesModel.create({
+      title: req.body.title,
+      genres: req.body.genres,
+      writers: req.body.writers,
+      cast: req.body.cast,
+      plot: req.body.plot,
+      year: req.body.year
+    }).then((newMovie) => {
+      return res
+        .status(201)
+        .send({ message: 'Book added successfully', newMovie })
+    })
+  }
+
 }
 
 export default Movies
