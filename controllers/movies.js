@@ -24,7 +24,7 @@ class Movies {
     }).then((newMovie) => {
       return res
         .status(201)
-        .send({ message: 'Book added successfully', newMovie })
+        .send({ message: 'Movie added successfully', newMovie })
     })
   }
 
