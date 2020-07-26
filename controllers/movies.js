@@ -56,15 +56,35 @@ class Movies {
     moviesModel.findByPk(id).then((movie) => {
       if (!movie) {
         return res.status(404).send({
-          message: 'movie not found'
+          message: 'movie not found',
         })
       }
       return movie.destroy().then(() => {
         return res.status(204).send({
-          message: 'book deleted successfully'
+          message: 'book deleted successfully',
         })
       })
     })
+  }
+
+  static getSingleMovie(req, res) {
+    const id = parseInt(req.params.id)
+    moviesModel
+      .findOne({
+        where: {
+          id
+        }
+      })
+      .then((movie) => {
+        if (!movie) {
+          return res.status(404).send({
+            message: 'movie not found',
+          })
+        }
+        return res
+          .status(201)
+          .send({ message: 'Movie found successfully', movie })
+      })
   }
 }
 
