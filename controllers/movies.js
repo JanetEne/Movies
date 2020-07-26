@@ -14,20 +14,42 @@ class Movies {
   }
 
   static addMovies(req, res) {
-    moviesModel.create({
-      title: req.body.title,
-      genres: req.body.genres,
-      writers: req.body.writers,
-      cast: req.body.cast,
-      plot: req.body.plot,
-      year: req.body.year
-    }).then((newMovie) => {
-      return res
-        .status(201)
-        .send({ message: 'Movie added successfully', newMovie })
-    })
+    moviesModel
+      .create({
+        title: req.body.title,
+        genres: req.body.genres,
+        writers: req.body.writers,
+        cast: req.body.cast,
+        plot: req.body.plot,
+        year: req.body.year,
+      })
+      .then((newMovie) => {
+        return res
+          .status(201)
+          .send({ message: 'Movie added successfully', newMovie })
+      })
   }
 
+  static updateMovie(req, res) {
+    const id = parseInt(req.params.id)
+    moviesModel.findByPk(id).then((movie) => {
+      movie
+        .update({
+          title: req.body.title || movie.title,
+          genres: req.body.genres || movie.genres,
+          writers: movie.writers || movie.writers,
+          likes: movie.likes,
+          cast: req.body.cast || movie.cast,
+          plot: req.body.plot || movie.plot,
+          year: req.body.year || movie.year,
+        })
+        .then((updatedmovie) => {
+          res
+            .status(200)
+            .send({ message: 'Movie updated successfully', updatedmovie })
+        })
+    })
+  }
 }
 
 export default Movies
