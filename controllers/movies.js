@@ -50,6 +50,22 @@ class Movies {
         })
     })
   }
+
+  static deleteMovie(req, res) {
+    const id = parseInt(req.params.id)
+    moviesModel.findByPk(id).then((movie) => {
+      if (!movie) {
+        return res.status(404).send({
+          message: 'movie not found'
+        })
+      }
+      return movie.destroy().then(() => {
+        return res.status(204).send({
+          message: 'book deleted successfully'
+        })
+      })
+    })
+  }
 }
 
 export default Movies
