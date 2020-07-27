@@ -25,6 +25,12 @@ module.exports = {
       year: {
         type: Sequelize.INTEGER
       },
+      likes: {
+        type: Sequelize.INTEGER
+      },
+      ratings: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
