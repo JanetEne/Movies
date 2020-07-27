@@ -101,6 +101,21 @@ class Movies {
         .send({ movie })
     })
   }
+
+  static searchMovieBygenres(req, res) {
+    moviesModel.findAll({
+      where: {
+        genres: {
+          [Op.substring]: `%${req.query.genres}%`
+        }
+      }
+    }).then((movie) => {
+      res
+        .status(200)
+        .send({ movie })
+    })
+  }
+
 }
 
 export default Movies
