@@ -11,6 +11,8 @@ router.delete('/movies/:id', Movies.deleteMovie)
 router.get('/movie/:id', Movies.getSingleMovie)
 router.get('/movies/title', Movies.searchMovieByTitle)
 router.get('/movies/genres', Movies.searchMovieBygenres)
+router.get('/movies/writers', Movies.searchMovieByWriters)
+
 
 
 
