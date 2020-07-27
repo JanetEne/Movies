@@ -116,6 +116,20 @@ class Movies {
     })
   }
 
+  static searchMovieByWriters(req, res) {
+    moviesModel.findAll({
+      where: {
+        writers: {
+          [Op.substring]: `%${req.query.writers}%`
+        }
+      }
+    }).then((movie) => {
+      res
+        .status(200)
+        .send({ movie })
+    })
+  }
+
 }
 
 export default Movies
