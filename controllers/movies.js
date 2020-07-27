@@ -144,6 +144,45 @@ class Movies {
     })
   }
 
+  static searchMovieByYear(req, res) {
+    if (req.query.year) {
+      const year = parseInt(req.query.year)
+      moviesModel.findAll({
+        where: {
+          year: {
+            [Op.eq]: year
+          }
+        }
+      }).then((movies) => {
+        res.status(200).send({ movies })
+      })
+    }
+    if (req.query.year_greater_than) {
+      const year = parseInt(req.query.year_greater_than)
+      moviesModel.findAll({
+        where: {
+          year: {
+            [Op.gt]: year
+          }
+        }
+      }).then((movies) => {
+        res.status(200).send({ movies })
+      })
+    }
+    if (req.query.year_less_than) {
+      const year = parseInt(req.query.year_less_than)
+      moviesModel.findAll({
+        where: {
+          year: {
+            [Op.lt]: year
+          }
+        }
+      }).then((movies) => {
+        res.status(200).send({ movies })
+      })
+    }
+  }
+
 }
 
 export default Movies

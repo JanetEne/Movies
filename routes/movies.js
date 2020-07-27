@@ -13,9 +13,7 @@ router.get('/movies/title', Movies.searchMovieByTitle)
 router.get('/movies/genres', Movies.searchMovieBygenres)
 router.get('/movies/writers', Movies.searchMovieByWriters)
 router.get('/movies/cast', Movies.searchMovieByCast)
-
-
-
+router.get('/movies/year', Movies.searchMovieByYear)
 
 
 module.exports = router;
