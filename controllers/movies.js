@@ -1,4 +1,5 @@
 import models from '../models/index'
+import { Op } from 'sequelize'
 
 const moviesModel = models.Movies
 
@@ -85,6 +86,20 @@ class Movies {
           .status(201)
           .send({ message: 'Movie found successfully', movie })
       })
+  }
+
+  static searchMovieByTitle(req, res) {
+    moviesModel.findAll({
+      where: {
+        title: {
+          [Op.substring]: `%${req.query.title}%`
+        }
+      }
+    }).then((movie) => {
+      res
+        .status(200)
+        .send({ movie })
+    })
   }
 }
 
