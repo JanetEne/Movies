@@ -12,6 +12,7 @@ router.get('/movie/:id', Movies.getSingleMovie)
 router.get('/movies/title', Movies.searchMovieByTitle)
 router.get('/movies/genres', Movies.searchMovieBygenres)
 router.get('/movies/writers', Movies.searchMovieByWriters)
+router.get('/movies/cast', Movies.searchMovieByCast)
 
 
 

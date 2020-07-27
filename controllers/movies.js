@@ -130,6 +130,20 @@ class Movies {
     })
   }
 
+  static searchMovieByCast(req, res) {
+    moviesModel.findAll({
+      where: {
+        cast: {
+          [Op.substring]: `%${req.query.cast}%`
+        }
+      }
+    }).then((movie) => {
+      res
+        .status(200)
+        .send({ movie })
+    })
+  }
+
 }
 
 export default Movies
