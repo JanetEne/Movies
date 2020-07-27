@@ -183,6 +183,45 @@ class Movies {
     }
   }
 
+  static searchMovieByLikes(req, res) {
+    if (req.query.likes) {
+      const likes = parseInt(req.query.likes)
+      moviesModel.findAll({
+        where: {
+          likes: {
+            [Op.eq]: likes
+          }
+        }
+      }).then((movies) => {
+        res.status(200).send({ movies })
+      })
+    }
+    if (req.query.likes_greater_than) {
+      const likes = parseInt(req.query.likes_greater_than)
+      moviesModel.findAll({
+        where: {
+          likes: {
+            [Op.gt]: likes
+          }
+        }
+      }).then((movies) => {
+        res.status(200).send({ movies })
+      })
+    }
+    if (req.query.likes_less_than) {
+      const likes = parseInt(req.query.likes_less_than)
+      moviesModel.findAll({
+        where: {
+          likes: {
+            [Op.lt]: likes
+          }
+        }
+      }).then((movies) => {
+        res.status(200).send({ movies })
+      })
+    }
+  }
+
 }
 
 export default Movies
