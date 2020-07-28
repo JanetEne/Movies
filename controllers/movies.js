@@ -222,6 +222,44 @@ class Movies {
     }
   }
 
+  static searchMovieByRating(req, res) {
+    if (req.query.rating) {
+      const rating = parseInt(req.query.rating)
+      moviesModel.findAll({
+        where: {
+          rating: {
+            [Op.eq]: rating
+          }
+        }
+      }).then((movies) => {
+        res.status(200).send({ movies })
+      })
+    }
+    if (req.query.rating_greater_than) {
+      const rating = parseInt(req.query.rating_greater_than)
+      moviesModel.findAll({
+        where: {
+          rating: {
+            [Op.gt]: rating
+          }
+        }
+      }).then((movies) => {
+        res.status(200).send({ movies })
+      })
+    }
+    if (req.query.rating_less_than) {
+      const likes = parseInt(req.query.rating_less_than)
+      moviesModel.findAll({
+        where: {
+          rating: {
+            [Op.lt]: rating
+          }
+        }
+      }).then((movies) => {
+        res.status(200).send({ movies })
+      })
+    }
+  }
 }
 
 export default Movies

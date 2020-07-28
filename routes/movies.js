@@ -15,6 +15,6 @@ router.get('/movies/writers', Movies.searchMovieByWriters)
 router.get('/movies/cast', Movies.searchMovieByCast)
 router.get('/movies/year', Movies.searchMovieByYear)
 router.get('/movies/likes', Movies.searchMovieByLikes)
-
+router.get('/movies/rating', Movies.searchMovieByRating)
 
 module.exports = router;
