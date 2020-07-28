@@ -3,9 +3,10 @@ import express from 'express'
 import Movies from '../controllers/movies'
 
 const router = express.Router();
+import validateAddMovie from '../middleware/movies'
 
 router.get('/movies', Movies.getAllMovies)
-router.post('/movies', Movies.addMovies)
+router.post('/movies', validateAddMovie, Movies.addMovies)
 router.put('/movies/:id', Movies.updateMovie)
 router.delete('/movies/:id', Movies.deleteMovie)
 router.get('/movie/:id', Movies.getSingleMovie)
