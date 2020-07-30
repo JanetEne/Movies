@@ -8,6 +8,7 @@ const should = chai.should()
 
 const request = supertest.agent(server)
 const moviesModel = models.Movies
+let newMovie = {}
 
 describe('Movies Api', () => {
   before(async () => {
@@ -23,6 +24,16 @@ describe('Movies Api', () => {
       year: 700,
       likes: 6,
       rating: 20,
+    })
+    newMovie = await moviesModel.create({
+      title: 'How to get away with murder',
+      genres: 'comedy',
+      writers: 'Janet',
+      cast: 'coding class',
+      plot: 'Just a random movie',
+      year: 1999,
+      likes: 300,
+      rating: 1,
     })
   })
   after(async () => {
