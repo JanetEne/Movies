@@ -1,7 +1,7 @@
-import server from '../app'
 import { expect } from 'chai'
 import supertest from 'supertest'
 import models from '../models'
+import server from '../app'
 
 const chai = require('chai')
 const should = chai.should()
