@@ -9,6 +9,7 @@ const should = chai.should()
 const request = supertest.agent(server)
 const moviesModel = models.Movies
 let newMovie = {}
+let movieToDelete = {}
 
 describe('Movies Api', () => {
   before(async () => {
@@ -34,6 +35,14 @@ describe('Movies Api', () => {
       year: 1999,
       likes: 300,
       rating: 1,
+    })
+    movieToDelete = await moviesModel.create({
+      title: 'Inception',
+      genres: 'Sci-Fi',
+      writers: 'Christopher Nolan',
+      cast: 'Leonardo DiCaprio',
+      plot: 'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
+      year: 2010,
     })
   })
   after(async () => {
@@ -235,6 +244,22 @@ describe('Movies Api', () => {
           expect(res.body.message).be.equal('Writers cannot be empty')
           done()
         })
+    })
+  })
+
+  describe('Delete book', () => {
+    it('should DELETE a Movie given the id', (done) => {
+      request.delete(`/api/v1/movies/${movieToDelete.id}`).end((err, res) => {
+        res.status.should.be.equal(204)
+        done()
+      })
+    })
+    it('should return Movie does not exist', (done) => {
+      request.delete('/api/v1/movies/808020').end((err, res) => {
+        res.status.should.be.equal(404)
+        expect(res.body.message).be.equal('Movie not found')
+        done()
+      })
     })
   })
 })
