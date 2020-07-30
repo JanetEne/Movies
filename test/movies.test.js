@@ -106,7 +106,7 @@ describe('Movies Api', () => {
           writers: 'Janet',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: '1999',
+          year: 'yipee',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
