@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon --exec babel-node ./bin/www",
     "lint": "eslint \"./**/*.js\"",
-    "test": "mocha --require @babel/register",
+    "test": "mocha --exit --require @babel/register",
     "coveralls": "node node_modules/.bin/coveralls"
   },
   "dependencies": {
