@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev": "nodemon --exec babel-node ./bin/www",
     "lint": "eslint \"./**/*.js\"",
-    "test": "mocha --exit --require @babel/register",
+    "test": "NODE_ENV=test mocha --exit --require @babel/register",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
@@ -20,6 +20,7 @@
     "nodemon": "^2.0.4",
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
+    "regenerator-runtime": "^0.13.7",
     "sequelize": "^6.3.3",
     "validator": "^13.1.1"
   },
