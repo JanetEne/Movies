@@ -22,7 +22,7 @@ describe('Movies Api', () => {
       plot: 'hey',
       year: 700,
       likes: 6,
-      rating: 20
+      rating: 20,
     })
   })
   after(async () => {
@@ -48,6 +48,26 @@ describe('Movies Api', () => {
         expect(res.body.message).be.equal('Movies fetched successfully')
         done()
       })
+    })
+  })
+
+  describe('Update movies route', () => {
+    it('should UPDATE a movie given the id', (done) => {
+      request
+        .put(`/api/v1/movies/${newMovie.id}`)
+        .send({
+          title: 'how to get away with murder',
+          genres: 'Drama',
+          writers: 'Olatubosun',
+          cast: 'Annalise Keathing',
+          plot: 'Just a random test movie',
+          year: '2021'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(200)
+          expect(res.body.message).be.equal('Movie updated successfully')
+          done()
+        })
     })
   })
 })
