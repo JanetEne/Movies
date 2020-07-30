@@ -149,4 +149,92 @@ describe('Movies Api', () => {
         })
     })
   })
+
+  describe('Add movies route', () => {
+    it('should Add Movie', (done) => {
+      request
+        .post('/api/v1/movies')
+        .send({
+          title: 'Orange is the new black',
+          genres: 'Drama',
+          writers: 'Joy',
+          cast: 'Alex Michael',
+          plot: 'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
+          year: '2009',
+        })
+        .end((err, res) => {
+          res.status.should.be.equal(201)
+          expect(res.body.message).be.equal('Movie added successfully')
+          done()
+        })
+    })
+    it('should Add Book when id does not exist', (done) => {
+      request
+        .post('/api/v1/movies/2222')
+        .send({
+          title: 'Orange is the new black',
+          genres: 'Drama',
+          writers: 'Joy',
+          cast: 'Alex Michael',
+          plot: 'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
+          year: '2009',
+        })
+        .end((err, res) => {
+          res.status.should.be.equal(404)
+          expect(res.body.message).be.equal(undefined)
+          done()
+        })
+    })
+    it('should return Year must be a number if the year passed isnt a number', (done) => {
+      request
+        .post('/api/v1/movies')
+        .send({
+          title: 'Orange is the new black',
+          genres: 'Drama',
+          writers: 'Joy',
+          cast: 'Alex Michael',
+          plot: 'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
+          year: 'hey',
+        })
+        .end((err, res) => {
+          res.status.should.be.equal(400)
+          expect(res.body.message).be.equal('Year must be a number')
+          done()
+        })
+    })
+    it('should return title cannot be empty if user doesnt put a title', (done) => {
+      request
+        .post('/api/v1/movies')
+        .send({
+          title: '',
+          genres: 'Drama',
+          writers: 'Joy',
+          cast: 'Alex Michael',
+          plot: 'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
+          year: '2009',
+        })
+        .end((err, res) => {
+          res.status.should.be.equal(400)
+          expect(res.body.message).be.equal('Title cannot be empty')
+          done()
+        })
+    })
+    it('should return writer cannot be empty if user doesnt put an writer', (done) => {
+      request
+        .post('/api/v1/movies')
+        .send({
+          title: 'Orange is the new black',
+          genres: 'Drama',
+          writers: '',
+          cast: 'Alex Michael',
+          plot: 'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
+          year: '2009',
+        })
+        .end((err, res) => {
+          res.status.should.be.equal(400)
+          expect(res.body.message).be.equal('Writers cannot be empty')
+          done()
+        })
+    })
+  })
 })
