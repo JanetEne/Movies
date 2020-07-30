@@ -34,7 +34,10 @@ class Movies {
   static updateMovie(req, res) {
     const id = parseInt(req.params.id)
     moviesModel.findByPk(id).then((movie) => {
-      movie
+      if (!movie) {
+        return res.status(404).send({ message: 'Movie not found' })
+      }
+      return movie
         .update({
           title: req.body.title || movie.title,
           genres: req.body.genres || movie.genres,
