@@ -72,11 +72,79 @@ describe('Movies Api', () => {
           writers: 'Olatubosun',
           cast: 'Annalise Keathing',
           plot: 'Just a random test movie',
-          year: '2021'
+          year: '2021',
         })
         .end((err, res) => {
           expect(res.status).to.equal(200)
           expect(res.body.message).be.equal('Movie updated successfully')
+          done()
+        })
+    })
+    it('should return movie with this id does not exist', (done) => {
+      request
+        .put('/api/v1/movies/555555')
+        .send({
+          title: 'How to get away with murder',
+          genres: 'comedy',
+          writers: 'Janet',
+          cast: 'coding class',
+          plot: 'Just a random movie',
+          year: '1999',
+        })
+        .end((err, res) => {
+          res.status.should.be.equal(404)
+          expect(res.body.message).be.equal('Movie not found')
+          done()
+        })
+    })
+    it('should return Year must be a number if the year passed isnt a number', (done) => {
+      request
+        .put(`/api/v1/movies/${newMovie.id}`)
+        .send({
+          title: 'How to get away with murder',
+          genres: 'comedy',
+          writers: 'Janet',
+          cast: 'coding class',
+          plot: 'Just a random movie',
+          year: '1999',
+        })
+        .end((err, res) => {
+          res.status.should.be.equal(400)
+          expect(res.body.message).be.equal('Year must be a number')
+          done()
+        })
+    })
+    it('should return title cannot be empty if user doesnt put a title', (done) => {
+      request
+        .put(`/api/v1/movies/${newMovie.id}`)
+        .send({
+          title: '',
+          genres: 'comedy',
+          writers: 'Janet',
+          cast: 'coding class',
+          plot: 'Just a random movie',
+          year: '1999',
+        })
+        .end((err, res) => {
+          res.status.should.be.equal(400)
+          expect(res.body.message).be.equal('Title cannot be empty')
+          done()
+        })
+    })
+    it('should return writer cannot be empty if user doesnt put an author', (done) => {
+      request
+        .put(`/api/v1/movies/${newMovie.id}`)
+        .send({
+          title: 'How to get away with murder',
+          genres: 'comedy',
+          writers: '',
+          cast: 'coding class',
+          plot: 'Just a random movie',
+          year: '1999',
+        })
+        .end((err, res) => {
+          res.status.should.be.equal(400)
+          expect(res.body.message).be.equal('Writers cannot be empty')
           done()
         })
     })
