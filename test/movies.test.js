@@ -305,8 +305,8 @@ describe('Movies Api', () => {
     })
   })
 
-  describe('Get Book By writers route', () => {
-    it('should get book by writer', (done) => {
+  describe('Get Movie By writers route', () => {
+    it('should get movie by writer', (done) => {
       request
         .get('/api/v1/movies/writers')
         .query({ writers: 'Janet' })
