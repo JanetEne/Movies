@@ -228,40 +228,40 @@ class Movies {
   }
 
   static searchMovieByRating(req, res) {
-    if (req.query.rating) {
-      const rating = parseInt(req.query.rating)
+    if (req.query.ratings) {
+      const ratings = parseInt(req.query.ratings)
       moviesModel.findAll({
         where: {
-          rating: {
-            [Op.eq]: rating
+          ratings: {
+            [Op.eq]: ratings
           }
         }
       }).then((movies) => {
-        res.status(200).send({ movies })
+        res.status(200).send({ data: movies })
       })
     }
-    if (req.query.rating_greater_than) {
-      const rating = parseInt(req.query.rating_greater_than)
+    if (req.query.ratings_greater_than) {
+      const ratings = parseInt(req.query.ratings_greater_than)
       moviesModel.findAll({
         where: {
-          rating: {
-            [Op.gt]: rating
+          ratings: {
+            [Op.gt]: ratings
           }
         }
       }).then((movies) => {
-        res.status(200).send({ movies })
+        res.status(200).send({ data: movies })
       })
     }
-    if (req.query.rating_less_than) {
-      const rating = parseInt(req.query.rating_less_than)
+    if (req.query.ratings_less_than) {
+      const ratings = parseInt(req.query.ratings_less_than)
       moviesModel.findAll({
         where: {
-          rating: {
-            [Op.lt]: rating
+          ratings: {
+            [Op.lt]: ratings
           }
         }
       }).then((movies) => {
-        res.status(200).send({ movies })
+        res.status(200).send({ data: movies })
       })
     }
   }
