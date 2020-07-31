@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     plot: DataTypes.STRING,
     year: DataTypes.INTEGER,
     likes: DataTypes.INTEGER,
-    ratings: DataTypes.INTEGER,
+    ratings: DataTypes.INTEGER
   }, {});
 
   return Movies;
