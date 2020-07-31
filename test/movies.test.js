@@ -25,9 +25,19 @@ describe('Movies Api', () => {
       writers: 'Olatubosun',
       cast: 'coding class',
       plot: 'hey',
-      year: 700,
+      year: 2009,
       likes: 6,
       rating: 20
+    })
+    await moviesModel.create({
+      title: 'jurassic park ',
+      genres: 'Sci-Fi',
+      writers: 'Michael crichton',
+      cast: 'Sam Neill',
+      plot: 'Just a random movie',
+      year: 1993,
+      likes: 500,
+      rating: 50
     })
     newMovie = await moviesModel.create({
       title: 'How to get away with murder',
@@ -35,7 +45,7 @@ describe('Movies Api', () => {
       writers: 'Janet',
       cast: 'coding class',
       plot: 'Just a random movie',
-      year: 1999,
+      year: 2018,
       likes: 300,
       rating: 1
     })
@@ -336,6 +346,39 @@ describe('Movies Api', () => {
       request
         .get('/api/v1/movies/cast')
         .query({ cast: 'coding class' })
+        .end((err, res) => {
+          res.status.should.be.equal(200)
+          expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+  })
+
+  describe('Get movie By Year Route', () => {
+    it('should get movie by year', (done) => {
+      request
+        .get('/api/v1/movies/year')
+        .query({ year: 2018 })
+        .end((err, res) => {
+          res.status.should.be.equal(200)
+          expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+    it('should get movie by year greater than', (done) => {
+      request
+        .get('/api/v1/movies/year')
+        .query({ year_greater_than: 2005 })
+        .end((err, res) => {
+          res.status.should.be.equal(200)
+          expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+    it('should get movie by year less than', (done) => {
+      request
+        .get('/api/v1/movies/year')
+        .query({ year_less_than: 2002 })
         .end((err, res) => {
           res.status.should.be.equal(200)
           expect(res.body.data).to.be.an('array')
