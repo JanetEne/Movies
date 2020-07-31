@@ -1,5 +1,6 @@
 import isNumeric from 'validator/lib/isNumeric'
 
+// eslint-disable-next-line consistent-return
 const validateAddMovie = (req, res, next) => {
   if (!req.body.title.trim()) {
     return res.status(400).send({ message: 'Title cannot be empty' })

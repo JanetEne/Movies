@@ -1,5 +1,7 @@
-import models from '../models/index'
+/* eslint-disable arrow-body-style */
+/* eslint-disable radix */
 import { Op } from 'sequelize'
+import models from '../models/index'
 
 const moviesModel = models.Movies
 
@@ -22,7 +24,7 @@ class Movies {
         writers: req.body.writers,
         cast: req.body.cast,
         plot: req.body.plot,
-        year: req.body.year,
+        year: req.body.year
       })
       .then((newMovie) => {
         return res
@@ -45,7 +47,7 @@ class Movies {
           likes: movie.likes,
           cast: req.body.cast || movie.cast,
           plot: req.body.plot || movie.plot,
-          year: req.body.year || movie.year,
+          year: req.body.year || movie.year
         })
         .then((updatedmovie) => {
           res
@@ -60,12 +62,12 @@ class Movies {
     moviesModel.findByPk(id).then((movie) => {
       if (!movie) {
         return res.status(404).send({
-          message: 'Movie not found',
+          message: 'Movie not found'
         })
       }
       return movie.destroy().then(() => {
         return res.status(204).send({
-          message: 'Movie deleted successfully',
+          message: 'Movie deleted successfully'
         })
       })
     })
@@ -82,7 +84,7 @@ class Movies {
       .then((movie) => {
         if (!movie) {
           return res.status(404).send({
-            message: 'movie not found',
+            message: 'movie not found'
           })
         }
         return res
@@ -251,7 +253,7 @@ class Movies {
       })
     }
     if (req.query.rating_less_than) {
-      const likes = parseInt(req.query.rating_less_than)
+      const rating = parseInt(req.query.rating_less_than)
       moviesModel.findAll({
         where: {
           rating: {

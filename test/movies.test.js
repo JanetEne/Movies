@@ -1,9 +1,12 @@
-import server from '../app'
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import { expect } from 'chai'
 import supertest from 'supertest'
+import server from '../app'
 import models from '../models'
 
 const chai = require('chai')
+
 const should = chai.should()
 
 const request = supertest.agent(server)
@@ -24,7 +27,7 @@ describe('Movies Api', () => {
       plot: 'hey',
       year: 700,
       likes: 6,
-      rating: 20,
+      rating: 20
     })
     newMovie = await moviesModel.create({
       title: 'How to get away with murder',
@@ -34,7 +37,7 @@ describe('Movies Api', () => {
       plot: 'Just a random movie',
       year: 1999,
       likes: 300,
-      rating: 1,
+      rating: 1
     })
     movieToDelete = await moviesModel.create({
       title: 'Inception',
@@ -43,7 +46,7 @@ describe('Movies Api', () => {
       cast: 'Leonardo DiCaprio',
       plot:
         'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-      year: 2010,
+      year: 2010
     })
   })
   after(async () => {
@@ -82,7 +85,7 @@ describe('Movies Api', () => {
           writers: 'Olatubosun',
           cast: 'Annalise Keathing',
           plot: 'Just a random test movie',
-          year: '2021',
+          year: '2021'
         })
         .end((err, res) => {
           expect(res.status).to.equal(200)
@@ -99,7 +102,7 @@ describe('Movies Api', () => {
           writers: 'Janet',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: '1999',
+          year: '1999'
         })
         .end((err, res) => {
           res.status.should.be.equal(404)
@@ -116,7 +119,7 @@ describe('Movies Api', () => {
           writers: 'Janet',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: 'yipee',
+          year: 'yipee'
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -133,7 +136,7 @@ describe('Movies Api', () => {
           writers: 'Janet',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: '1999',
+          year: '1999'
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -150,7 +153,7 @@ describe('Movies Api', () => {
           writers: '',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: '1999',
+          year: '1999'
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -171,7 +174,7 @@ describe('Movies Api', () => {
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: '2009',
+          year: '2009'
         })
         .end((err, res) => {
           res.status.should.be.equal(201)
@@ -189,7 +192,7 @@ describe('Movies Api', () => {
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: '2009',
+          year: '2009'
         })
         .end((err, res) => {
           res.status.should.be.equal(404)
@@ -207,7 +210,7 @@ describe('Movies Api', () => {
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: 'hey',
+          year: 'hey'
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -225,7 +228,7 @@ describe('Movies Api', () => {
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: '2009',
+          year: '2009'
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -243,7 +246,7 @@ describe('Movies Api', () => {
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: '2009',
+          year: '2009'
         })
         .end((err, res) => {
           res.status.should.be.equal(400)

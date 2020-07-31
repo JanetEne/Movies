@@ -1,9 +1,8 @@
 import express from 'express'
-
+import validateAddMovie from '../middleware/movies'
 import Movies from '../controllers/movies'
 
 const router = express.Router();
-import validateAddMovie from '../middleware/movies'
 
 router.get('/movies', Movies.getAllMovies)
 router.post('/movies', validateAddMovie, Movies.addMovies)
