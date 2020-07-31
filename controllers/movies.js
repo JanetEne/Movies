@@ -131,7 +131,7 @@ class Movies {
     }).then((movie) => {
       res
         .status(200)
-        .send({ movie })
+        .send({ data: movie })
     })
   }
 
