@@ -41,7 +41,8 @@ describe('Movies Api', () => {
       genres: 'Sci-Fi',
       writers: 'Christopher Nolan',
       cast: 'Leonardo DiCaprio',
-      plot: 'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
+      plot:
+        'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
       year: 2010,
     })
   })
@@ -168,7 +169,8 @@ describe('Movies Api', () => {
           genres: 'Drama',
           writers: 'Joy',
           cast: 'Alex Michael',
-          plot: 'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
+          plot:
+            'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
           year: '2009',
         })
         .end((err, res) => {
@@ -185,7 +187,8 @@ describe('Movies Api', () => {
           genres: 'Drama',
           writers: 'Joy',
           cast: 'Alex Michael',
-          plot: 'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
+          plot:
+            'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
           year: '2009',
         })
         .end((err, res) => {
@@ -202,7 +205,8 @@ describe('Movies Api', () => {
           genres: 'Drama',
           writers: 'Joy',
           cast: 'Alex Michael',
-          plot: 'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
+          plot:
+            'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
           year: 'hey',
         })
         .end((err, res) => {
@@ -219,7 +223,8 @@ describe('Movies Api', () => {
           genres: 'Drama',
           writers: 'Joy',
           cast: 'Alex Michael',
-          plot: 'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
+          plot:
+            'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
           year: '2009',
         })
         .end((err, res) => {
@@ -236,7 +241,8 @@ describe('Movies Api', () => {
           genres: 'Drama',
           writers: '',
           cast: 'Alex Michael',
-          plot: 'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
+          plot:
+            'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
           year: '2009',
         })
         .end((err, res) => {
@@ -258,6 +264,26 @@ describe('Movies Api', () => {
       request.delete('/api/v1/movies/808020').end((err, res) => {
         res.status.should.be.equal(404)
         expect(res.body.message).be.equal('Movie not found')
+        done()
+      })
+    })
+  })
+
+  describe('Get single Movie', () => {
+    it('it should GET a movie by id', (done) => {
+      request.get(`/api/v1/movie/${newMovie.id}`).end((err, res) => {
+        res.status.should.be.equal(201)
+        res.body.should.be.a('object')
+        expect(res.body.movie).to.have.property('title')
+        expect(res.body.movie).to.have.property('writers')
+        expect(res.body.movie).to.have.property('year')
+        done()
+      })
+    })
+    it('it should GET a movie by id', (done) => {
+      request.get('/api/v1/movie/8888').end((err, res) => {
+        res.status.should.be.equal(404)
+        expect(res.body.message).to.equal('movie not found')
         done()
       })
     })
