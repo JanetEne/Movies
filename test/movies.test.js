@@ -291,4 +291,17 @@ describe('Movies Api', () => {
       })
     })
   })
+
+  describe('Get Book By title route', () => {
+    it('should get book by title', (done) => {
+      request
+        .get('/api/v1/movies/title')
+        .query({ title: 'How to get away with murder' })
+        .end((err, res) => {
+          res.status.should.be.equal(200)
+          expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+  })
 })
