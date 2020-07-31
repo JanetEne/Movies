@@ -292,11 +292,24 @@ describe('Movies Api', () => {
     })
   })
 
-  describe('Get Book By title route', () => {
-    it('should get book by title', (done) => {
+  describe('Get Movie By title route', () => {
+    it('should get a Movie by title', (done) => {
       request
         .get('/api/v1/movies/title')
         .query({ title: 'How to get away with murder' })
+        .end((err, res) => {
+          res.status.should.be.equal(200)
+          expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+  })
+
+  describe('Get Movie By writers route', () => {
+    it('should get movie by writer', (done) => {
+      request
+        .get('/api/v1/movies/writers')
+        .query({ writers: 'Janet' })
         .end((err, res) => {
           res.status.should.be.equal(200)
           expect(res.body.data).to.be.an('array')
