@@ -317,4 +317,17 @@ describe('Movies Api', () => {
         })
     })
   })
+
+  describe('Get Movie By genres route', () => {
+    it('should get genres by writer', (done) => {
+      request
+        .get('/api/v1/movies/genres')
+        .query({ genres: 'comedy' })
+        .end((err, res) => {
+          res.status.should.be.equal(200)
+          expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+  })
 })
