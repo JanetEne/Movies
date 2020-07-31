@@ -27,7 +27,7 @@ describe('Movies Api', () => {
       plot: 'hey',
       year: 2009,
       likes: 6,
-      rating: 20
+      ratings: 20
     })
     await moviesModel.create({
       title: 'jurassic park ',
@@ -37,7 +37,7 @@ describe('Movies Api', () => {
       plot: 'Just a random movie',
       year: 1993,
       likes: 500,
-      rating: 50
+      ratings: 50
     })
     newMovie = await moviesModel.create({
       title: 'How to get away with murder',
@@ -47,7 +47,7 @@ describe('Movies Api', () => {
       plot: 'Just a random movie',
       year: 2018,
       likes: 300,
-      rating: 1
+      ratings: 1
     })
     movieToDelete = await moviesModel.create({
       title: 'Inception',
@@ -412,6 +412,39 @@ describe('Movies Api', () => {
       request
         .get('/api/v1/movies/likes')
         .query({ likes_less_than: 300 })
+        .end((err, res) => {
+          res.status.should.be.equal(200)
+          expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+  })
+
+  describe('Get movie By rating Route', () => {
+    it('should get movie by rating', (done) => {
+      request
+        .get('/api/v1/movies/ratings')
+        .query({ ratings: 50 })
+        .end((err, res) => {
+          res.status.should.be.equal(200)
+          expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+    it('should get movie by rating greater than', (done) => {
+      request
+        .get('/api/v1/movies/ratings')
+        .query({ ratings_greater_than: 20 })
+        .end((err, res) => {
+          res.status.should.be.equal(200)
+          expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+    it('should get movie by rating less than', (done) => {
+      request
+        .get('/api/v1/movies/ratings')
+        .query({ ratings_less_than: 20 })
         .end((err, res) => {
           res.status.should.be.equal(200)
           expect(res.body.data).to.be.an('array')
