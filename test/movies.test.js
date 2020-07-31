@@ -386,4 +386,37 @@ describe('Movies Api', () => {
         })
     })
   })
+
+  describe('Get movie By likes Route', () => {
+    it('should get movie by likes', (done) => {
+      request
+        .get('/api/v1/movies/likes')
+        .query({ likes: 500 })
+        .end((err, res) => {
+          res.status.should.be.equal(200)
+          expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+    it('should get movie by likes greater than', (done) => {
+      request
+        .get('/api/v1/movies/likes')
+        .query({ likes_greater_than: 300 })
+        .end((err, res) => {
+          res.status.should.be.equal(200)
+          expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+    it('should get movie by likes less than', (done) => {
+      request
+        .get('/api/v1/movies/likes')
+        .query({ likes_less_than: 300 })
+        .end((err, res) => {
+          res.status.should.be.equal(200)
+          expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+  })
 })

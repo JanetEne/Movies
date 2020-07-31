@@ -198,7 +198,7 @@ class Movies {
           }
         }
       }).then((movies) => {
-        res.status(200).send({ movies })
+        res.status(200).send({ data: movies })
       })
     }
     if (req.query.likes_greater_than) {
@@ -210,7 +210,7 @@ class Movies {
           }
         }
       }).then((movies) => {
-        res.status(200).send({ movies })
+        res.status(200).send({ data: movies })
       })
     }
     if (req.query.likes_less_than) {
@@ -222,7 +222,7 @@ class Movies {
           }
         }
       }).then((movies) => {
-        res.status(200).send({ movies })
+        res.status(200).send({ data: movies })
       })
     }
   }
