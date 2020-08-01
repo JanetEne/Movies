@@ -52,7 +52,7 @@ const validateSignup = (req, res, next) => {
     !hasSpecialChar(password) ||
     !hasNumber(password)
   ) {
-    return res.status(404).send({
+    return res.status(400).send({
       message:
         'password must contain at least one uppercase letter, one special character and one number',
     })
