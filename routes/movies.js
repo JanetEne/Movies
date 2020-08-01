@@ -1,5 +1,5 @@
 import express from 'express'
-import validateAddMovie from '../middleware/movies'
+import validateAddMovie from '../middleware/validatemovies'
 import Movies from '../controllers/movies'
 
 const router = express.Router();
