@@ -1,36 +1,24 @@
 /* eslint-disable no-unused-vars */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Movies', {
+    await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
+      firstName: {
         type: Sequelize.STRING
       },
-      genres: {
+      lastName: {
         type: Sequelize.STRING
       },
-      writers: {
+      email: {
         type: Sequelize.STRING
       },
-      cast: {
+      hash: {
         type: Sequelize.STRING
-      },
-      plot: {
-        type: Sequelize.STRING
-      },
-      year: {
-        type: Sequelize.INTEGER
-      },
-      likes: {
-        type: Sequelize.INTEGER
-      },
-      ratings: {
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +31,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Movies');
+    await queryInterface.dropTable('Users');
   }
 }
