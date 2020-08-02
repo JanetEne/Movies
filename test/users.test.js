@@ -190,14 +190,14 @@ describe('User test', () => {
     })
 
     // Test Sign up - user trying to register with an exisiting email
-    it('should return User Already Exists', (done) => {
+    it('should return User Already Exists', () => {
       request
         .post('/api/users/signup')
         .send({
-          firstName: 'patricia',
+          firstName: 'patrick',
           lastName: 'Ogenyi',
           email: 'pat@gmail.com',
-          password: 'Areyou5years?',
+          password: 'password7H,',
         })
         .end((err, res) => {
           expect(res.status).to.equal(409)
@@ -207,7 +207,7 @@ describe('User test', () => {
     })
 
     // Test Sign up - user created
-    it('should return Sign Up Successful', (done) => {
+    it('should return Sign Up Successful', () => {
       request
         .post('/api/users/signup')
         .send({
