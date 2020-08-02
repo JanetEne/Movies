@@ -202,7 +202,6 @@ describe('User test', () => {
         .end((err, res) => {
           expect(res.status).to.equal(409)
           expect(res.body.message).to.equal('User Already Exists')
-          done()
         })
     })
 
@@ -219,7 +218,6 @@ describe('User test', () => {
         .end((err, res) => {
           expect(res.status).to.equal(201)
           expect(res.body.message).to.equal('Sign Up Successful')
-          done()
         })
     })
   })
