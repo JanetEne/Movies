@@ -57,6 +57,7 @@ const validateSignup = (req, res, next) => {
         'password must contain at least one uppercase letter, one special character and one number',
     })
   }
+  next()
 }
 
 export default validateSignup

@@ -23,10 +23,6 @@ describe('User test', () => {
       hash: bcrypt.hashSync('password', 8),
     })
   })
-  after(async () => {
-    // empty the database
-    await UserModel.destroy({ where: {} })
-  })
 
   describe('User Sign up tests', () => {
     // Test Sign up - first name not provided
@@ -190,7 +186,7 @@ describe('User test', () => {
     })
 
     // Test Sign up - user trying to register with an exisiting email
-    it('should return User Already Exists', () => {
+    it('should return User Already Exists', (done) => {
       request
         .post('/api/users/signup')
         .send({
@@ -202,11 +198,12 @@ describe('User test', () => {
         .end((err, res) => {
           expect(res.status).to.equal(409)
           expect(res.body.message).to.equal('User Already Exists')
+          done()
         })
     })
 
     // Test Sign up - user created
-    it('should return Sign Up Successful', () => {
+    it('should return Sign Up Successful', (done) => {
       request
         .post('/api/users/signup')
         .send({
@@ -218,6 +215,7 @@ describe('User test', () => {
         .end((err, res) => {
           expect(res.status).to.equal(201)
           expect(res.body.message).to.equal('Sign Up Successful')
+          done()
         })
     })
   })
