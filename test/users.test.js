@@ -23,6 +23,10 @@ describe('User test', () => {
       hash: bcrypt.hashSync('password', 8),
     })
   })
+  after(async () => {
+    // empty the database
+    await UserModel.destroy({ where: {} })
+  })
 
   describe('User Sign up tests', () => {
     // Test Sign up - first name not provided
@@ -209,7 +213,7 @@ describe('User test', () => {
         .send({
           firstName: 'Janet',
           lastName: 'Ogenyi',
-          email: 'janet@gmail.com',
+          email: 'janetene@gmail.com',
           password: 'Somep@ssw4ordd',
         })
         .end((err, res) => {
