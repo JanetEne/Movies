@@ -13,7 +13,6 @@ import moviesRouter from './routes/movies'
 
 const app = express();
 
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -32,7 +31,6 @@ app.use((req, res, next) => {
   next(createError(404));
 });
 
-// error handler
 app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;

@@ -190,7 +190,7 @@ describe('User test', () => {
     })
 
     // Test Sign up - user trying to register with an exisiting email
-    it('should return User Already Exists', () => {
+    it('should return User Already Exists', (done) => {
       request
         .post('/api/users/signup')
         .send({
@@ -202,22 +202,24 @@ describe('User test', () => {
         .end((err, res) => {
           expect(res.status).to.equal(409)
           expect(res.body.message).to.equal('User Already Exists')
+          done()
         })
     })
 
     // Test Sign up - user created
-    it('should return Sign Up Successful', () => {
+    it('should return Sign Up Successful', (done) => {
       request
         .post('/api/users/signup')
         .send({
           firstName: 'Janet',
           lastName: 'Ogenyi',
-          email: 'janet@gmail.com',
+          email: 'janetene@gmail.com',
           password: 'Somep@ssw4ordd',
         })
         .end((err, res) => {
           expect(res.status).to.equal(201)
           expect(res.body.message).to.equal('Sign Up Successful')
+          done()
         })
     })
   })
