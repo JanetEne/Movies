@@ -223,4 +223,83 @@ describe('User test', () => {
         })
     })
   })
+  // Test Sign in
+  describe('Sign In', () => {
+    // Test Sign in - Login Successful
+    it('should sign in a user', (done) => {
+      request
+        .post('/api/users/signin')
+        .send({
+          email: 'pat@gmail.com',
+          password: 'password',
+        })
+        // eslint-disable-next-line no-shadow
+        .end((err, res) => {
+          expect(res.status).to.equal(200)
+          expect(res.body.message).to.equal('Login Successful')
+          expect(res.body).to.have.property('token')
+          done()
+        })
+    })
+
+    // Test Sign in - user does not exist
+    it('should return user not found if email does not exist', (done) => {
+      request
+        .post('/api/users/signin')
+        .send({ email: 'email@gmail.com', password: 'no_password' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404)
+          expect(res.body.message).to.equal('User Not Found')
+          done()
+        })
+    })
+
+    // Test Sign in - email not valid
+    it('should return email inavlid if email entered is invalid', (done) => {
+      request
+        .post('/api/users/signin')
+        .send({ email: 'email@noUser', password: 'no_password' })
+        .end((err, res) => {
+          expect(res.status).to.equal(400)
+          expect(res.body.message).to.equal('Email Invalid')
+          done()
+        })
+    })
+
+    // Test Sign in - password dont match
+    it('should return invalid password if password does not match', (done) => {
+      request
+        .post('/api/users/signin')
+        .send({ email: 'pat@gmail.com', password: 'no_password' })
+        .end((err, res) => {
+          expect(res.status).to.equal(401)
+          expect(res.body.message).to.equal('Invalid Password')
+          done()
+        })
+    })
+
+    // Test Sign in - password not provided
+    it('should return password is required', (done) => {
+      request
+        .post('/api/users/signin')
+        .send({ email: 'pat@gmail.com', password: '' })
+        .end((err, res) => {
+          expect(res.status).to.equal(400)
+          expect(res.body.message).to.equal('Password is required')
+          done()
+        })
+    })
+
+    // Test Sign in - email not provided
+    it('should return email is required if no email is provided', (done) => {
+      request
+        .post('/api/users/signin')
+        .send({ email: '', password: 'passwW4!ord' })
+        .end((err, res) => {
+          expect(res.status).to.equal(400)
+          expect(res.body.message).to.equal('Email is required')
+          done()
+        })
+    })
+  })
 })
