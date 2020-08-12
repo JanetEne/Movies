@@ -1,7 +1,10 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import { expect } from 'chai'
 import supertest from 'supertest'
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 import server from '../app'
 import models from '../models'
 
@@ -9,8 +12,13 @@ const chai = require('chai')
 
 const should = chai.should()
 
+const secret = process.env.JWT_SECRET
 const request = supertest.agent(server)
 const moviesModel = models.Movies
+const UserModel = models.User
+
+let testUser = {}
+const faketoken = 'twbdshbhbedbhsbhwhbdvyvdwvghn'
 let newMovie = {}
 let movieToDelete = {}
 
@@ -18,6 +26,23 @@ describe('Movies Api', () => {
   before(async () => {
     // create database tables
     await models.sequelize.sync()
+
+    testUser = await UserModel.create({
+      firstName: 'Vanessa',
+      lastName: 'Ogenyi',
+      email: 'Vanessa@gmail.com',
+      hash: bcrypt.hashSync('password', 8),
+    })
+
+    testUser.token = jwt.sign(
+      {
+        id: testUser.id,
+        firstName: testUser.firstName,
+        lastName: testUser.lastName,
+        email: testUser.email,
+      },
+      secret
+    )
 
     await moviesModel.create({
       title: 'test movies',
@@ -27,7 +52,7 @@ describe('Movies Api', () => {
       plot: 'hey',
       year: 2009,
       likes: 6,
-      ratings: 20
+      ratings: 20,
     })
     await moviesModel.create({
       title: 'jurassic park ',
@@ -37,7 +62,7 @@ describe('Movies Api', () => {
       plot: 'Just a random movie',
       year: 1993,
       likes: 500,
-      ratings: 50
+      ratings: 50,
     })
     newMovie = await moviesModel.create({
       title: 'How to get away with murder',
@@ -47,7 +72,7 @@ describe('Movies Api', () => {
       plot: 'Just a random movie',
       year: 2018,
       likes: 300,
-      ratings: 1
+      ratings: 1,
     })
     movieToDelete = await moviesModel.create({
       title: 'Inception',
@@ -56,12 +81,36 @@ describe('Movies Api', () => {
       cast: 'Leonardo DiCaprio',
       plot:
         'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-      year: 2010
+      year: 2010,
     })
   })
   after(async () => {
     // empty the database
     await moviesModel.destroy({ where: {} })
+  })
+
+  // Test invalid token
+  describe('Route authentication', () => {
+    it('Should return access denied if token is invalid', (done) => {
+      request
+        .post('/api/users/signin')
+        .send({
+          email: 'Vanessa@gmail.com',
+          password: 'password',
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(200)
+          request
+            .post('/api/v1/movies')
+            .set('authorization', `Bearer ${faketoken}`)
+            // eslint-disable-next-line no-shadow
+            .end((err, res) => {
+              expect(res.status).to.equal(401)
+              expect(res.body.message).to.equal('Access is Denied')
+              done()
+            })
+        })
+    })
   })
 
   describe('Index route', () => {
@@ -89,13 +138,14 @@ describe('Movies Api', () => {
     it('should UPDATE a movie given the id', (done) => {
       request
         .put(`/api/v1/movies/${newMovie.id}`)
+        .set('authorization', `Bearer ${testUser.token}`)
         .send({
           title: 'how to get away with murder',
           genres: 'Drama',
           writers: 'Olatubosun',
           cast: 'Annalise Keathing',
           plot: 'Just a random test movie',
-          year: '2021'
+          year: '2021',
         })
         .end((err, res) => {
           expect(res.status).to.equal(200)
@@ -106,13 +156,14 @@ describe('Movies Api', () => {
     it('should return movie with this id does not exist', (done) => {
       request
         .put('/api/v1/movies/555555')
+        .set('authorization', `Bearer ${testUser.token}`)
         .send({
           title: 'How to get away with murder',
           genres: 'comedy',
           writers: 'Janet',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: '1999'
+          year: '1999',
         })
         .end((err, res) => {
           res.status.should.be.equal(404)
@@ -123,13 +174,14 @@ describe('Movies Api', () => {
     it('should return Year must be a number if the year passed isnt a number', (done) => {
       request
         .put(`/api/v1/movies/${newMovie.id}`)
+        .set('authorization', `Bearer ${testUser.token}`)
         .send({
           title: 'How to get away with murder',
           genres: 'comedy',
           writers: 'Janet',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: 'yipee'
+          year: 'yipee',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -140,13 +192,14 @@ describe('Movies Api', () => {
     it('should return title cannot be empty if user doesnt put a title', (done) => {
       request
         .put(`/api/v1/movies/${newMovie.id}`)
+        .set('authorization', `Bearer ${testUser.token}`)
         .send({
           title: '',
           genres: 'comedy',
           writers: 'Janet',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: '1999'
+          year: '1999',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -157,13 +210,14 @@ describe('Movies Api', () => {
     it('should return writer cannot be empty if user doesnt put an author', (done) => {
       request
         .put(`/api/v1/movies/${newMovie.id}`)
+        .set('authorization', `Bearer ${testUser.token}`)
         .send({
           title: 'How to get away with murder',
           genres: 'comedy',
           writers: '',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: '1999'
+          year: '1999',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -177,6 +231,7 @@ describe('Movies Api', () => {
     it('should Add Movie', (done) => {
       request
         .post('/api/v1/movies')
+        .set('authorization', `Bearer ${testUser.token}`)
         .send({
           title: 'Orange is the new black',
           genres: 'Drama',
@@ -184,7 +239,7 @@ describe('Movies Api', () => {
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: '2009'
+          year: '2009',
         })
         .end((err, res) => {
           res.status.should.be.equal(201)
@@ -195,6 +250,7 @@ describe('Movies Api', () => {
     it('should Add Book when id does not exist', (done) => {
       request
         .post('/api/v1/movies/2222')
+        .set('authorization', `Bearer ${testUser.token}`)
         .send({
           title: 'Orange is the new black',
           genres: 'Drama',
@@ -202,7 +258,7 @@ describe('Movies Api', () => {
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: '2009'
+          year: '2009',
         })
         .end((err, res) => {
           res.status.should.be.equal(404)
@@ -213,6 +269,7 @@ describe('Movies Api', () => {
     it('should return Year must be a number if the year passed isnt a number', (done) => {
       request
         .post('/api/v1/movies')
+        .set('authorization', `Bearer ${testUser.token}`)
         .send({
           title: 'Orange is the new black',
           genres: 'Drama',
@@ -220,7 +277,7 @@ describe('Movies Api', () => {
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: 'hey'
+          year: 'hey',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -231,6 +288,7 @@ describe('Movies Api', () => {
     it('should return title cannot be empty if user doesnt put a title', (done) => {
       request
         .post('/api/v1/movies')
+        .set('authorization', `Bearer ${testUser.token}`)
         .send({
           title: '',
           genres: 'Drama',
@@ -238,7 +296,7 @@ describe('Movies Api', () => {
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: '2009'
+          year: '2009',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -249,6 +307,7 @@ describe('Movies Api', () => {
     it('should return writer cannot be empty if user doesnt put an writer', (done) => {
       request
         .post('/api/v1/movies')
+        .set('authorization', `Bearer ${testUser.token}`)
         .send({
           title: 'Orange is the new black',
           genres: 'Drama',
@@ -256,7 +315,7 @@ describe('Movies Api', () => {
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: '2009'
+          year: '2009',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -268,17 +327,23 @@ describe('Movies Api', () => {
 
   describe('Delete book', () => {
     it('should DELETE a Movie given the id', (done) => {
-      request.delete(`/api/v1/movies/${movieToDelete.id}`).end((err, res) => {
-        res.status.should.be.equal(204)
-        done()
-      })
+      request
+        .delete(`/api/v1/movies/${movieToDelete.id}`)
+        .set('authorization', `Bearer ${testUser.token}`)
+        .end((err, res) => {
+          res.status.should.be.equal(204)
+          done()
+        })
     })
     it('should return Movie does not exist', (done) => {
-      request.delete('/api/v1/movies/808020').end((err, res) => {
-        res.status.should.be.equal(404)
-        expect(res.body.message).be.equal('Movie not found')
-        done()
-      })
+      request
+        .delete('/api/v1/movies/808020')
+        .set('authorization', `Bearer ${testUser.token}`)
+        .end((err, res) => {
+          res.status.should.be.equal(404)
+          expect(res.body.message).be.equal('Movie not found')
+          done()
+        })
     })
   })
 

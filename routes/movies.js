@@ -1,13 +1,14 @@
 import express from 'express'
 import validateAddMovie from '../middleware/movies'
 import Movies from '../controllers/movies'
+import validatetoken from '../middleware/validatetoken'
 
 const router = express.Router();
 
 router.get('/movies', Movies.getAllMovies)
-router.post('/movies', validateAddMovie, Movies.addMovies)
-router.put('/movies/:id', validateAddMovie, Movies.updateMovie)
-router.delete('/movies/:id', Movies.deleteMovie)
+router.post('/movies', validatetoken, validateAddMovie, Movies.addMovies)
+router.put('/movies/:id', validatetoken, validateAddMovie, Movies.updateMovie)
+router.delete('/movies/:id', validatetoken, Movies.deleteMovie)
 router.get('/movie/:id', Movies.getSingleMovie)
 router.get('/movies/title', Movies.searchMovieByTitle)
 router.get('/movies/genres', Movies.searchMovieBygenres)
