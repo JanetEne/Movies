@@ -308,25 +308,25 @@ describe('Movies Api', () => {
     })
   })
 
-  describe('Get single Movie', () => {
-    it('it should GET a movie by id', (done) => {
-      request.get(`/api/v1/movie/${newMovie.id}`).end((err, res) => {
-        res.status.should.be.equal(201)
-        res.body.should.be.a('object')
-        expect(res.body.movie).to.have.property('title')
-        expect(res.body.movie).to.have.property('writers')
-        expect(res.body.movie).to.have.property('year')
-        done()
-      })
-    })
-    it('it should GET a movie by id', (done) => {
-      request.get('/api/v1/movie/8888').end((err, res) => {
-        res.status.should.be.equal(404)
-        expect(res.body.message).to.equal('movie not found')
-        done()
-      })
-    })
-  })
+  // describe('Get single Movie', () => {
+  //   it('it should GET a movie by id', (done) => {
+  //     request.get(`/api/v1/movie/${newMovie.id}`).end((err, res) => {
+  //       res.status.should.be.equal(201)
+  //       res.body.should.be.a('object')
+  //       expect(res.body.movie).to.have.property('title')
+  //       expect(res.body.movie).to.have.property('writers')
+  //       expect(res.body.movie).to.have.property('year')
+  //       done()
+  //     })
+  //   })
+  //   it('it should GET a movie by id', (done) => {
+  //     request.get('/api/v1/movie/8888').end((err, res) => {
+  //       res.status.should.be.equal(404)
+  //       expect(res.body.message).to.equal('movie not found')
+  //       done()
+  //     })
+  //   })
+  // })
 
   describe('Get Movie By title route', () => {
     it('should get a Movie by title', (done) => {
