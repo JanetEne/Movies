@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import { expect } from 'chai'
@@ -21,48 +22,56 @@ describe('Movies Api', () => {
 
     await moviesModel.create({
       title: 'test movies',
+      img:
+        'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
       genres: 'comedy',
       writers: 'Olatubosun',
       cast: 'coding class',
       plot: 'hey',
       year: 2009,
       likes: 6,
-      ratings: 20
+      ratings: 20,
     })
     await moviesModel.create({
       title: 'jurassic park ',
+      img:
+        'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
       genres: 'Sci-Fi',
       writers: 'Michael crichton',
       cast: 'Sam Neill',
       plot: 'Just a random movie',
       year: 1993,
       likes: 500,
-      ratings: 50
+      ratings: 50,
     })
     newMovie = await moviesModel.create({
       title: 'How to get away with murder',
+      img:
+        'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
       genres: 'comedy',
       writers: 'Janet',
       cast: 'coding class',
       plot: 'Just a random movie',
       year: 2018,
       likes: 300,
-      ratings: 1
+      ratings: 1,
     })
     movieToDelete = await moviesModel.create({
       title: 'Inception',
+      img:
+        'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
       genres: 'Sci-Fi',
       writers: 'Christopher Nolan',
       cast: 'Leonardo DiCaprio',
       plot:
         'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-      year: 2010
+      year: 2010,
     })
   })
-  after(async () => {
-    // empty the database
-    await moviesModel.destroy({ where: {} })
-  })
+  // after(async () => {
+  //   // empty the database
+  //   await moviesModel.destroy({ where: {} })
+  // })
 
   describe('Index route', () => {
     it('should return welcome message when / route is matched', (done) => {
@@ -78,8 +87,7 @@ describe('Movies Api', () => {
     it('it should GET all the movies', (done) => {
       request.get('/api/v1/movies').end((err, res) => {
         res.status.should.be.equal(200)
-        expect(res.body.movies).to.be.an('array')
-        expect(res.body.message).be.equal('Movies fetched successfully')
+        expect(res.body.data).to.be.an('array')
         done()
       })
     })
@@ -91,15 +99,16 @@ describe('Movies Api', () => {
         .put(`/api/v1/movies/${newMovie.id}`)
         .send({
           title: 'how to get away with murder',
+          img:
+            'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
           genres: 'Drama',
           writers: 'Olatubosun',
           cast: 'Annalise Keathing',
           plot: 'Just a random test movie',
-          year: '2021'
+          year: '2021',
         })
         .end((err, res) => {
           expect(res.status).to.equal(200)
-          expect(res.body.message).be.equal('Movie updated successfully')
           done()
         })
     })
@@ -108,11 +117,13 @@ describe('Movies Api', () => {
         .put('/api/v1/movies/555555')
         .send({
           title: 'How to get away with murder',
+          img:
+            'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
           genres: 'comedy',
           writers: 'Janet',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: '1999'
+          year: '1999',
         })
         .end((err, res) => {
           res.status.should.be.equal(404)
@@ -125,11 +136,13 @@ describe('Movies Api', () => {
         .put(`/api/v1/movies/${newMovie.id}`)
         .send({
           title: 'How to get away with murder',
+          img:
+            'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
           genres: 'comedy',
           writers: 'Janet',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: 'yipee'
+          year: 'yipee',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -142,11 +155,13 @@ describe('Movies Api', () => {
         .put(`/api/v1/movies/${newMovie.id}`)
         .send({
           title: '',
+          img:
+            'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
           genres: 'comedy',
           writers: 'Janet',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: '1999'
+          year: '1999',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -159,11 +174,13 @@ describe('Movies Api', () => {
         .put(`/api/v1/movies/${newMovie.id}`)
         .send({
           title: 'How to get away with murder',
+          img:
+            'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
           genres: 'comedy',
           writers: '',
           cast: 'coding class',
           plot: 'Just a random movie',
-          year: '1999'
+          year: '1999',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -179,30 +196,33 @@ describe('Movies Api', () => {
         .post('/api/v1/movies')
         .send({
           title: 'Orange is the new black',
+          img:
+            'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
           genres: 'Drama',
           writers: 'Joy',
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: '2009'
+          year: '2009',
         })
         .end((err, res) => {
           res.status.should.be.equal(201)
-          expect(res.body.message).be.equal('Movie added successfully')
           done()
         })
     })
-    it('should Add Book when id does not exist', (done) => {
+    it('should Add Movie when id does not exist', (done) => {
       request
         .post('/api/v1/movies/2222')
         .send({
           title: 'Orange is the new black',
+          img:
+            'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
           genres: 'Drama',
           writers: 'Joy',
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: '2009'
+          year: '2009',
         })
         .end((err, res) => {
           res.status.should.be.equal(404)
@@ -215,12 +235,14 @@ describe('Movies Api', () => {
         .post('/api/v1/movies')
         .send({
           title: 'Orange is the new black',
+          img:
+            'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
           genres: 'Drama',
           writers: 'Joy',
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: 'hey'
+          year: 'hey',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -233,12 +255,14 @@ describe('Movies Api', () => {
         .post('/api/v1/movies')
         .send({
           title: '',
+          img:
+            'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
           genres: 'Drama',
           writers: 'Joy',
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: '2009'
+          year: '2009',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)
@@ -251,12 +275,14 @@ describe('Movies Api', () => {
         .post('/api/v1/movies')
         .send({
           title: 'Orange is the new black',
+          img:
+            'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
           genres: 'Drama',
           writers: '',
           cast: 'Alex Michael',
           plot:
             'Ten years after transporting drug money to alex, Piper is imprisoned for drugs',
-          year: '2009'
+          year: '2009',
         })
         .end((err, res) => {
           res.status.should.be.equal(400)

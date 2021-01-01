@@ -6,6 +6,7 @@ module.exports = {
       [
         {
           title: 'A quiet place',
+          img: 'https://images-na.ssl-images-amazon.com/images/I/A1zV1fxtMEL._SL1500_.jpg',
           genres: 'Horror',
           writers: 'Scott Beck',
           cast: 'Emily Blunt',
