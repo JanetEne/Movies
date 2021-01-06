@@ -13,7 +13,7 @@ class Movies {
 
   static getAllMovies(req, res) {
     moviesModel.findAll().then((movies) => {
-      res.status(200).send({ data: movies })
+      res.status(200).send(movies)
     })
   }
 
