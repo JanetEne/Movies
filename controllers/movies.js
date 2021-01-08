@@ -13,7 +13,7 @@ class Movies {
 
   static getAllMovies(req, res) {
     moviesModel.findAll().then((movies) => {
-      res.status(200).send({ data: movies })
+      res.status(200).send(movies)
     })
   }
 
@@ -48,8 +48,8 @@ class Movies {
           plot: req.body.plot || movie.plot,
           year: req.body.year || movie.year,
         })
-        .then((movie) => {
-          res.status(200).send(movie)
+        .then((Movie) => {
+          res.status(200).send(Movie)
         })
     })
   }
