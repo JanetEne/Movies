@@ -21,6 +21,7 @@ class Movies {
     moviesModel
       .create({
         title: req.body.title,
+        img: req.body.img,
         genres: req.body.genres,
         writers: req.body.writers,
         cast: req.body.cast,
@@ -41,6 +42,7 @@ class Movies {
       return movie
         .update({
           title: req.body.title || movie.title,
+          img: req.body.img || movie.img,
           genres: req.body.genres || movie.genres,
           writers: movie.writers || movie.writers,
           likes: movie.likes,
