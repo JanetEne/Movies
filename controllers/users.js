@@ -59,7 +59,6 @@ class User {
         password = bcrypt.compareSync(req.body.password, user.hash)
         if (password) {
           return res.status(200).send({
-            message: 'Login Successful',
             token: jwt.sign(
               {
                 firstName: req.body.firstName,
@@ -68,7 +67,11 @@ class User {
                 id: req.body.id
               },
               secret
-            )
+            ),
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email
           })
         }
         return res.status(401).send({
