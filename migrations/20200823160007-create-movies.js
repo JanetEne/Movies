@@ -32,6 +32,11 @@ module.exports = {
       likes: {
         type: Sequelize.INTEGER
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        references: { model: 'Users', key: 'id' },
+        onDelete: 'CASCADE'
+      },
       ratings: {
         type: Sequelize.INTEGER
       },

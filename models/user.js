@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
-    'User',
+  const Users = sequelize.define(
+    'Users',
     {
       firstName: DataTypes.STRING,
       lastName: DataTypes.STRING,
@@ -9,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   )
-  User.associate = () => {
-    // associations can be defined here
+  Users.associate = (models) => {
+    Users.hasMany(models.Movies, { foreignKey: 'userId', as: 'movies' })
   }
-  return User
+  return Users
 }
