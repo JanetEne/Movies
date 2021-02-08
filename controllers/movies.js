@@ -27,6 +27,7 @@ class Movies {
         cast: req.body.cast,
         plot: req.body.plot,
         year: req.body.year,
+        userId: req.decoded.id
       })
       .then((movie) => {
         return res.status(201).send(movie)

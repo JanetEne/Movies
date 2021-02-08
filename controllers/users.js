@@ -1,3 +1,4 @@
+/* eslint-disable function-paren-newline */
 /* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 import jwt from 'jsonwebtoken'
@@ -7,7 +8,7 @@ import models from '../models/index'
 require('dotenv').config()
 
 const rounds = 8
-const UserModel = models.User
+const UserModel = models.Users
 const secret = process.env.JWT_SECRET
 let password = ''
 
@@ -39,8 +40,13 @@ class User {
               id: newUser.id
             },
             secret
-          )
-        }))
+          ),
+          id: newUser.id,
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          email: newUser.email
+        })
+      )
     })
   }
 
@@ -61,10 +67,10 @@ class User {
           return res.status(200).send({
             token: jwt.sign(
               {
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email,
-                id: req.body.id
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                id: user.id
               },
               secret
             ),
