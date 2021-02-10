@@ -17,6 +17,18 @@ class Movies {
     })
   }
 
+  static getMovieForUser(req, res) {
+    moviesModel
+      .findAll({
+        where: {
+          userId: req.decoded.id,
+        },
+      })
+      .then((movies) => {
+        res.status(200).send(movies)
+      })
+  }
+
   static addMovies(req, res) {
     moviesModel
       .create({
@@ -27,7 +39,7 @@ class Movies {
         cast: req.body.cast,
         plot: req.body.plot,
         year: req.body.year,
-        userId: req.decoded.id
+        userId: req.decoded.id,
       })
       .then((movie) => {
         return res.status(201).send(movie)
