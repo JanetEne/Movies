@@ -4,6 +4,7 @@ import validatetoken from '../middleware/validatetoken'
 
 const router = express.Router();
 
-router.post('/ratings/:id', validatetoken, Ratings.rateMovie)
+router.post('/rating/:id', validatetoken, Ratings.rateMovie)
+router.get('/rating/:id', Ratings.getRating)
 
 module.exports = router;
