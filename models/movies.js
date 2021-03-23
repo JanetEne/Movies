@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   )
   Movies.associate = (models) => {
     Movies.belongsTo(models.Users, { foreignKey: 'userId', onDelete: 'CASCADE' })
+    Movies.hasMany(models.Ratings, { foreignKey: 'movieId', as: 'rating' })
   }
 
   return Movies
