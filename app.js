@@ -10,6 +10,7 @@ import logger from 'morgan'
 import indexRouter from './routes/index'
 import usersRouter from './routes/users'
 import moviesRouter from './routes/movies'
+import ratingsRouter from './routes/ratings'
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1', indexRouter);
 app.use('/api/v1', moviesRouter);
 app.use('/api/users', usersRouter);
+app.use('/api', ratingsRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
