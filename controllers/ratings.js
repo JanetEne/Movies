@@ -34,6 +34,22 @@ class Ratings {
 
   static getRating(req, res) {
     const movieId = parseInt(req.params.id)
+    const userId = parseInt(req.query.userId)
+    let myRating = 0
+    if (userId) {
+      ratingsModel
+        .findOne({
+          where: {
+            movieId,
+            userId
+          }
+        })
+        .then((userRating) => {
+          if (userRating) {
+            myRating = userRating.rating
+          }
+        })
+    }
     ratingsModel
       .count({
         where: {
@@ -50,7 +66,7 @@ class Ratings {
             })
             .then((sum) => {
               const average = sum / count
-              return res.status(200).send({ average })
+              return res.status(200).send({ average, count, myRating })
             })
         }
         return res.status(200).send({ average: null })
