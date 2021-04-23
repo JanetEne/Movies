@@ -1,4 +1,4 @@
-'use strict';
+/* eslint-disable no-unused-vars */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Likes', {
@@ -21,7 +21,6 @@ module.exports = {
         references: { model: 'Users', key: 'id' },
         onDelete: 'CASCADE'
       },
-      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
