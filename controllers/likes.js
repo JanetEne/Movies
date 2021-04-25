@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable comma-dangle */
 /* eslint-disable radix */
 import models from '../models/index'
@@ -17,46 +18,45 @@ class Likes {
       })
       .then((like) => {
         if (like) {
-          like.update({
-            like: req.body.like,
-          })
-          return res.status(200).send({ like })
+          like.destroy().then(() =>
+            res.status(204).send({
+              message: 'like deleted successfully',
+            }))
+        } else {
+          return likesModel
+            .create({
+              like: 1,
+              movieId,
+              userId,
+            })
+            .then((newLike) => res.status(200).send({ message: 'movie liked' }))
         }
-        return likesModel
-          .create({
-            like: req.body.like,
-            movieId,
-            userId,
-          })
-          .then((newLike) => res.status(200).send(newLike))
       })
   }
 
   static getLikes(req, res) {
     const movieId = parseInt(req.params.id)
     const userId = parseInt(req.query.userId)
-    let myLike = 0
-    if (userId) {
-      likesModel
-        .findOne({
-          where: {
-            movieId,
-            userId,
-          },
-        })
-        .then((userLikes) => {
-          if (userLikes) {
-            myLike = userLikes.like
-          }
-        })
-    }
+    let isLiked = false
     likesModel
-      .count({
+      .findOne({
         where: {
           movieId,
+          userId,
         },
       })
-      .then((count) => res.status(200).send({ count, myLike }))
+      .then((userLikes) => {
+        if (userLikes) {
+          isLiked = true
+        }
+        likesModel
+          .count({
+            where: {
+              movieId,
+            },
+          })
+          .then((count) => res.status(200).send({ count, isLiked }))
+      })
   }
 }
 

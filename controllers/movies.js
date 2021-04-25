@@ -99,7 +99,7 @@ class Movies {
             message: 'movie not found',
           })
         }
-        return res.status(201).send(movie)
+        return res.status(200).send(movie)
       })
   }
 
