@@ -69,7 +69,7 @@ class Ratings {
               return res.status(200).send({ average, count, myRating })
             })
         }
-        return res.status(200).send({ average: null })
+        return res.status(200).send({ average: 0, count: 0, myRating: 0 })
       })
   }
 }
