@@ -11,6 +11,7 @@ import indexRouter from './routes/index'
 import usersRouter from './routes/users'
 import moviesRouter from './routes/movies'
 import ratingsRouter from './routes/ratings'
+import likesRouter from './routes/likes'
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/api/v1', indexRouter);
 app.use('/api/v1', moviesRouter);
 app.use('/api/v1', usersRouter);
 app.use('/api/v1', ratingsRouter)
+app.use('/api/v1', likesRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
